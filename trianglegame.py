@@ -14,27 +14,37 @@ screen = pygame.display.set_mode(screensize)
 ds=10
 do=0.01
 
-greens = [(0, 255, 0), (0, 200, 0), (0, 150, 0), (0, 100, 0), (0, 50, 0)]
 reds = [(255, 0, 0), (200, 0, 0), (150, 0, 0)]
+oranges = [(255, 165, 0), (200, 130, 0), (150, 97, 0), (100, 65, 0), (50, 32, 0)]
+yellows = [(255, 255, 0), (200, 200, 0), (150, 150, 0), (100, 100, 0), (50, 50, 0)]
+greens = [(0, 255, 0), (0, 200, 0), (0, 150, 0), (0, 100, 0), (0, 50, 0)]
+blues = [(0, 0, 255), (0, 0, 200), (0, 0, 150), (0, 0, 100), (0, 0, 50)]
+purples = [(255, 0, 255), (200, 0, 200), (150, 0, 150), (100, 0, 100), (50, 0, 50)]
+colors = [reds, oranges, yellows, greens, blues, purples]
 
-#Stars
-points=[]
-for i in range(3000):
-    n1 = random.randrange(-10000,10000)
-    n2 = random.randrange(-10000,10000)
-    n3 = random.randrange(-10000,10000)
-    rand = random.randrange(10,500)
-    points.append([n1,n2,n3,rand,greens[random.randrange(0,5)]])
+maincolor = greens
+secondarycolor = purples
 
-# Add 3 red points
-for i in range(3):
-    n1 = random.randrange(0, 2000)  
-    n2 = 0 
-    n3 = random.randrange(0, 5000)  
-    rand = random.randrange(10, 500)
-    points.append([n1, n2, n3, rand, reds[i]])
-    print(n1, n2, n3, rand, reds[i])
+def get_initial_points(target, maincolor=greens, secondarycolor=blues):
+    points = []
+    for i in range(2000):
+        n1 = random.randrange(-10000, 10000)
+        n2 = random.randrange(-10000, 10000)
+        n3 = random.randrange(-10000, 10000)
+        rand = random.randrange(10, 500)
+        points.append([n1, n2, n3, rand, random.choice(maincolor)])
 
+    for i in range(target):
+        n1 = random.randrange(0, 2000)  
+        n2 = 0 
+        n3 = random.randrange(0, 5000)  
+        rand = random.randrange(10, 500)
+        points.append([n1, n2, n3, rand, random.choice(secondarycolor)])
+    
+    return points
+
+target = 3
+points = get_initial_points(target)
 count = 0
 while run:
     pygame.time.delay(20)
@@ -85,19 +95,28 @@ while run:
                                      int((v[0]-center[0])*np.sin(angle) + (v[1]-center[1])*np.cos(angle) + center[1]))
                                     for v in vertices]  # Rotate the vertices
                 pygame.draw.polygon(screen, p[4], rotated_vertices)  # Use p[4] as the color parameter
-                if p[4] in reds:
+                if p[4] in secondarycolor:
                     triangle_area = abs((rotated_vertices[0][0] * (rotated_vertices[1][1] - rotated_vertices[2][1]) +
                                         rotated_vertices[1][0] * (rotated_vertices[2][1] - rotated_vertices[0][1]) +
                                         rotated_vertices[2][0] * (rotated_vertices[0][1] - rotated_vertices[1][1])) / 2)
                     screen_area = screensize[0] * screensize[1]
                     if triangle_area > screen_area * 0.5:
                         count += 1
-                        points.remove(p)
+                        if p in points:
+                            points.remove(p)
+                        if count == target:
+                            target += 1
+                            maincolor = secondarycolor
+                            choices = colors.copy()
+                            choices.remove(maincolor)
+                            secondarycolor = random.choice(choices)
+                            points = get_initial_points(target, maincolor=maincolor, secondarycolor=secondarycolor) 
+                            count = 0
 
     
     # Display the count of red points
     font = pygame.font.Font(None, 36)
-    text = font.render(f"Red points: {count}", True, (255, 255, 255))
+    text = font.render(f"Collected: {count}/ {target}", True, (255, 255, 255))
     screen.blit(text, (10, 10))
 
     pygame.display.update()
