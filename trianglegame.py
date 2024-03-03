@@ -1,6 +1,7 @@
 import pygame
 import random
 import numpy as np
+import math
 
 pygame.init()
 run=True
@@ -24,6 +25,26 @@ colors = [reds, oranges, yellows, greens, blues, purples]
 
 maincolor = greens
 secondarycolor = blues
+
+# Function to divide a square into n triangles
+def draw_complete(target, colors, n):
+    angle = 360 / target
+    x0, y0 = 70, 70
+    side_length = 200 // 2 - 50
+    
+    for i in range(n):
+        color = colors[i % len(colors)]
+        # Calculate the vertices of the triangle
+        x1 = x0 + side_length * math.cos(math.radians(i * angle))
+        y1 = y0 + side_length * math.sin(math.radians(i * angle))
+        x2 = x0 + side_length * math.cos(math.radians((i + 1) * angle))
+        y2 = y0 + side_length * math.sin(math.radians((i + 1) * angle))
+        
+        # Draw and fill the triangle
+        pygame.draw.polygon(screen, color, [(x0, y0), (x1, y1), (x2, y2)])
+        
+        # Draw the border lines
+        pygame.draw.lines(screen, (255, 255, 255), True, [(x0, y0), (x1, y1), (x2, y2)], 4)
 
 def get_initial_points(target, maincolor=greens, secondarycolor=blues):
     points = []
@@ -77,9 +98,10 @@ while run:
     for p in points:
         #this is to create new stars
         if p[2]<=-5000 or p[2]>=5000:
-            p[0], p[1], p[2] = random.randrange(-10000,10000), random.randrange(-10000,10000), 10000
-            p[3] = random.randrange(10,500)
-            p[4] = maincolor[random.randrange(0,5)]
+            p[0], p[1], p[2] = random.randrange(-10000,10000), random.randrange(-10000,10000), random.randrange(1000,10000)  
+            if not p[4] in secondarycolor:
+                p[3] = random.randrange(10,700)
+                p[4] = random.choice(maincolor)  
         else:
             #this is to ignore stars which are behind the ship
             if p[2]<=0:
@@ -100,11 +122,11 @@ while run:
                                         rotated_vertices[1][0] * (rotated_vertices[2][1] - rotated_vertices[0][1]) +
                                         rotated_vertices[2][0] * (rotated_vertices[0][1] - rotated_vertices[1][1])) / 2)
                     screen_area = screensize[0] * screensize[1]
-                    if triangle_area > screen_area * 0.1:
-                        count += 1
+                    if triangle_area > screen_area * 0.1: # detect collision
+                        count += 1 # increment count of found triangles
                         if p in points:
                             points.remove(p)
-                        if count == target:
+                        if count == target: # reset the game
                             target += 1
                             maincolor = secondarycolor
                             choices = colors.copy()
@@ -116,7 +138,8 @@ while run:
     
     # Display the count of red points
     font = pygame.font.Font(None, 36)
-    text = font.render(f"Collected: {count}/ {target}", True, (255, 255, 255))
+    text = font.render(f"{count}", True, (255, 255, 255))
+    draw_complete(target, secondarycolor, count)
     screen.blit(text, (10, 10))
 
     pygame.display.update()
