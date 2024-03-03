@@ -6,7 +6,7 @@ pygame.init()
 run=True
 
 #screensize
-screensize = (width,height)=(1000,1000)
+screensize = (width,height)=(pygame.display.Info().current_w,pygame.display.Info().current_h-120)#(1000,1000)
 center=(int(width/2),int(height/2))
 screen = pygame.display.set_mode(screensize)
 
@@ -23,7 +23,7 @@ purples = [(255, 0, 255), (200, 0, 200), (150, 0, 150), (100, 0, 100), (50, 0, 5
 colors = [reds, oranges, yellows, greens, blues, purples]
 
 maincolor = greens
-secondarycolor = purples
+secondarycolor = blues
 
 def get_initial_points(target, maincolor=greens, secondarycolor=blues):
     points = []
@@ -31,7 +31,7 @@ def get_initial_points(target, maincolor=greens, secondarycolor=blues):
         n1 = random.randrange(-10000, 10000)
         n2 = random.randrange(-10000, 10000)
         n3 = random.randrange(-10000, 10000)
-        rand = random.randrange(10, 500)
+        rand = random.randrange(10, 700)
         points.append([n1, n2, n3, rand, random.choice(maincolor)])
 
     for i in range(target):
@@ -79,7 +79,7 @@ while run:
         if p[2]<=-5000 or p[2]>=5000:
             p[0], p[1], p[2] = random.randrange(-10000,10000), random.randrange(-10000,10000), 10000
             p[3] = random.randrange(10,500)
-            p[4] = greens[random.randrange(0,5)]
+            p[4] = maincolor[random.randrange(0,5)]
         else:
             #this is to ignore stars which are behind the ship
             if p[2]<=0:
@@ -100,7 +100,7 @@ while run:
                                         rotated_vertices[1][0] * (rotated_vertices[2][1] - rotated_vertices[0][1]) +
                                         rotated_vertices[2][0] * (rotated_vertices[0][1] - rotated_vertices[1][1])) / 2)
                     screen_area = screensize[0] * screensize[1]
-                    if triangle_area > screen_area * 0.5:
+                    if triangle_area > screen_area * 0.1:
                         count += 1
                         if p in points:
                             points.remove(p)
