@@ -2,9 +2,15 @@ import pygame
 import random
 import numpy as np
 import math
+import serial
+import json
 
 pygame.init()
 run=True
+
+# Serial communication setup
+port = '/dev/cu.usbserial-56230321241'
+ser = serial.Serial(port, 115200)  # Adjust COM port as necessary
 
 #screensize
 screensize = (width,height)=(pygame.display.Info().current_w,pygame.display.Info().current_h-120)#(1000,1000)
@@ -26,11 +32,15 @@ colors = [reds, oranges, yellows, greens, blues, purples]
 maincolor = greens
 secondarycolor = blues
 
-# Function to divide a square into n triangles
-def draw_complete(target, colors, n):
+def draw_complete(target, colors, n, big=False):
     angle = 360 / target
     x0, y0 = 70, 70
     side_length = 200 // 2 - 50
+    if big:
+        x0, y0 = 500, 500
+        side_length = 500 // 2 - 50
+        # TODO: center in screen
+
     
     for i in range(n):
         color = colors[i % len(colors)]
@@ -43,10 +53,15 @@ def draw_complete(target, colors, n):
         # Draw and fill the triangle
         pygame.draw.polygon(screen, color, [(x0, y0), (x1, y1), (x2, y2)])
         
-        # Draw the border lines
+    # Draw the border lines
+    for i in range(target):
+        x1 = x0 + side_length * math.cos(math.radians(i * angle))
+        y1 = y0 + side_length * math.sin(math.radians(i * angle))
+        x2 = x0 + side_length * math.cos(math.radians((i + 1) * angle))
+        y2 = y0 + side_length * math.sin(math.radians((i + 1) * angle))
         pygame.draw.lines(screen, (255, 255, 255), True, [(x0, y0), (x1, y1), (x2, y2)], 4)
 
-def get_initial_points(target, maincolor=greens, secondarycolor=blues):
+def get_initial_points(target,   maincolor=greens, secondarycolor=blues):
     points = []
     for i in range(2000):
         n1 = random.randrange(-10000, 10000)
@@ -66,22 +81,50 @@ def get_initial_points(target, maincolor=greens, secondarycolor=blues):
 
 target = 3
 points = get_initial_points(target)
+FPS = 30
+clock = pygame.time.Clock()
 count = 0
+curds = ds
+joystick_x = 1950
 while run:
-    pygame.time.delay(20)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run=False
+
+    ########## read joystick and potentiometer
+
+    data = ser.read(ser.inWaiting() or 1).decode('utf-8', errors='ignore')
+    if data:
+        try:
+            joystick_x, pot_value = (int(value) for value in data.strip().split(','))
+            if pot_value>0:
+                pot_value = (pot_value-2000)/1000
+
+        except ValueError as e:
+            print(e)
+            pass
+
+    if joystick_x < 1900:
+        for p in points:
+            p[0], p[2] = np.cos(-do) * p[0] - np.sin(-do) * p[2], np.sin(-do) * p[0] + np.cos(-do) * p[2]
+    elif joystick_x > 2000:
+        for p in points:
+            p[0], p[2] = np.cos(do) * p[0] - np.sin(do) * p[2], np.sin(do) * p[0] + np.cos(do) * p[2]
+
+    #curds = pot_value*ds adjust speed
+    for p in points:
+        p[2]-=curds
+
 
     ################## keys
     keys=pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
         for p in points:
-            p[2]-=ds
+            p[2]-=curds
     if keys[pygame.K_s]:
         for p in points:
-            p[2] += ds
+            p[2] += curds
 
     if keys[pygame.K_a] or keys[pygame.K_d]:
         if keys[pygame.K_a]:
@@ -90,7 +133,6 @@ while run:
         else:
             for p in points:
                 p[0], p[2] = np.cos(do) * p[0] - np.sin(do) * p[2], np.sin(do) * p[0] + np.cos(do) * p[2]
-
 
     ############################### Collision detection and projection ###################
 
@@ -127,12 +169,16 @@ while run:
                         if p in points:
                             points.remove(p)
                         if count == target: # reset the game
+                            draw_complete(target, secondarycolor, count, big=True)
+                            pygame.display.update()
+                            pygame.time.delay(1000)
                             target += 1
                             maincolor = secondarycolor
                             choices = colors.copy()
                             choices.remove(maincolor)
                             secondarycolor = random.choice(choices)
                             points = get_initial_points(target, maincolor=maincolor, secondarycolor=secondarycolor) 
+                            orig_points = points.copy()
                             count = 0
 
     
@@ -143,3 +189,4 @@ while run:
     screen.blit(text, (10, 10))
 
     pygame.display.update()
+    clock.tick(FPS)
