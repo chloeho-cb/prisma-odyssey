@@ -129,33 +129,21 @@ while run:
         if data:
             try:
                 joystick_x, joystick_y, button_val = (int(value) for value in data.strip().split(','))
-            except ValueError as e:
-                print(e)
+            except ValueError:
                 pass
-
-    if joystick_y > 2000:
-        move_forward()
-    elif joystick_y < 1900:
-        move_backward()
-
-    if joystick_x < 1900:
-        move_left()
-    elif joystick_x > 2000:
-        move_right()
 
     ################## keys
     keys=pygame.key.get_pressed()
 
-    if keys[pygame.K_w]:
+    if joystick_y > 2000 or keys[pygame.K_w]:
         move_forward()
-    if keys[pygame.K_s]:
+    elif joystick_y < 1900 or keys[pygame.K_s]:
         move_backward()
 
-    if keys[pygame.K_a] or keys[pygame.K_d]:
-        if keys[pygame.K_a]:
-            move_left()
-        else:
-            move_right()
+    if joystick_x < 1900 or keys[pygame.K_a]:
+        move_left()
+    elif joystick_x > 2000 or keys[pygame.K_d]:
+        move_right()
 
     ############################### Collision detection and projection ###################
 
