@@ -1,16 +1,31 @@
 import pygame
+from pygame import mixer
 import random
 import numpy as np
 import math
 import serial
-import json
+import os
 
 pygame.init()
 run=True
 
+s = 'sound'
+mixer.init()
+music = pygame.mixer.music.load(os.path.join(s, '522053__nickr2020__heavenly_ambience_nickr2020.wav'))
+# Heavenly_ambience_NickR2020.wav by NickR2020 -- https://freesound.org/s/522053/ -- License: Attribution 3.0
+pygame.mixer.music.play(-1)
+captured = pygame.mixer.Sound(os.path.join(s, '517755__danlucaz__game-fx-1.wav'))
+# Game FX #1 by danlucaz -- https://freesound.org/s/517755/ -- License: Creative Commons 0
+complete = pygame.mixer.Sound(os.path.join(s, '324644__chinomaker__time-warp-effect.wav'))
+# FX152.wav by jalastram -- https://freesound.org/s/317569/ -- License: Attribution 4.0
+# Time warp effect by chinomaker -- https://freesound.org/s/324644/ -- License: Creative Commons 0
 # Serial communication setup
 port = '/dev/cu.usbserial-56230321241'
-ser = serial.Serial(port, 115200)  # Adjust COM port as necessary
+try:
+    ser = serial.Serial(port, 115200)  # Adjust COM port as necessary
+except Exception:
+    ser = False
+    pass
 
 #screensize
 screensize = (width,height)=(pygame.display.Info().current_w,pygame.display.Info().current_h-120)#(1000,1000)
@@ -39,7 +54,6 @@ def draw_complete(target, colors, n, big=False):
     if big:
         x0, y0 = width/2, height/2
         side_length = 1000 // 2 - 50
-
     
     for i in range(n):
         color = colors[i % len(colors)]
@@ -60,7 +74,7 @@ def draw_complete(target, colors, n, big=False):
         y2 = y0 + side_length * math.sin(math.radians((i + 1) * angle))
         pygame.draw.lines(screen, (255, 255, 255), True, [(x0, y0), (x1, y1), (x2, y2)], 4)
 
-def get_initial_points(target,   maincolor=greens, secondarycolor=blues):
+def get_initial_points(target, maincolor=greens, secondarycolor=blues):
     points = []
     for i in range(2000):
         n1 = random.randrange(-10000, 10000)
@@ -83,23 +97,22 @@ points = get_initial_points(target)
 FPS = 30
 clock = pygame.time.Clock()
 count = 0
-joystick_x = 1950
-joystick_y = 1950
+joystick_x, joystick_y = 1950, 1950
 button_val = 0
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run=False
 
-    ########## read joystick
-
-    data = ser.read(ser.inWaiting() or 1).decode('utf-8', errors='ignore')
-    if data:
-        try:
-            joystick_x, joystick_y, button_val = (int(value) for value in data.strip().split(','))
-        except ValueError as e:
-            print(e)
-            pass
+    ########## joystick
+    if ser:
+        data = ser.read(ser.inWaiting() or 1).decode('utf-8', errors='ignore')
+        if data:
+            try:
+                joystick_x, joystick_y, button_val = (int(value) for value in data.strip().split(','))
+            except ValueError as e:
+                print(e)
+                pass
 
     if joystick_x < 1900:
         for p in points:
@@ -164,11 +177,13 @@ while run:
                                         rotated_vertices[1][0] * (rotated_vertices[2][1] - rotated_vertices[0][1]) +
                                         rotated_vertices[2][0] * (rotated_vertices[0][1] - rotated_vertices[1][1])) / 2)
                     screen_area = screensize[0] * screensize[1]
-                    if triangle_area > screen_area * 0.1 and button_val: # detect collision
+                    if triangle_area > screen_area * 0.01 and (button_val or keys[pygame.K_SPACE]): # detect collision
                         count += 1 # increment count of found triangles
+                        pygame.mixer.Sound.play(captured)
                         if p in points:
                             points.remove(p)
                         if count == target: # reset the game
+                            pygame.mixer.Sound.play(complete)
                             draw_complete(target, secondarycolor, count, big=True)
                             pygame.display.update()
                             pygame.time.delay(1000)
@@ -178,14 +193,13 @@ while run:
                             choices.remove(maincolor)
                             secondarycolor = random.choice(choices)
                             points = get_initial_points(target, maincolor=maincolor, secondarycolor=secondarycolor) 
-                            orig_points = points.copy()
                             count = 0
 
     
-    # Display the count of red points
+    # Display text and triangles captured
     font = pygame.font.Font(None, 36)
     count_text = font.render(f"{count}", True, (255, 255, 255))
-    instruction_text = font.render("Press Joystick to Capture Triangles", True, (255, 255, 255)) 
+    instruction_text = font.render("Click Joystick to Collect Triangles", True, (255, 255, 255)) 
     draw_complete(target, secondarycolor, count)
     screen.blit(count_text, (10, 10))
     screen.blit(instruction_text, ((width/2)-200, height-30))
