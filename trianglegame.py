@@ -17,8 +17,8 @@ pygame.mixer.music.play(-1)
 captured = pygame.mixer.Sound(os.path.join(s, '517755__danlucaz__game-fx-1.wav'))
 # Game FX #1 by danlucaz -- https://freesound.org/s/517755/ -- License: Creative Commons 0
 complete = pygame.mixer.Sound(os.path.join(s, '324644__chinomaker__time-warp-effect.wav'))
-# FX152.wav by jalastram -- https://freesound.org/s/317569/ -- License: Attribution 4.0
 # Time warp effect by chinomaker -- https://freesound.org/s/324644/ -- License: Creative Commons 0
+
 # Serial communication setup
 port = '/dev/cu.usbserial-56230321241'
 try:
@@ -92,13 +92,32 @@ def get_initial_points(target, maincolor=greens, secondarycolor=blues):
     
     return points
 
-target = 3
-points = get_initial_points(target)
+def move_forward():
+    for p in points:
+        p[2]-=ds
+
+def move_backward():
+    for p in points:
+        p[2] += ds
+
+def move_left():
+    for p in points:
+        p[0], p[2] = np.cos(-do) * p[0] - np.sin(-do) * p[2], np.sin(-do) * p[0] + np.cos(-do) * p[2]
+
+def move_right():
+     for p in points:
+        p[0], p[2] = np.cos(do) * p[0] - np.sin(do) * p[2], np.sin(do) * p[0] + np.cos(do) * p[2]
+
+
 FPS = 30
 clock = pygame.time.Clock()
+
+target = 3
+points = get_initial_points(target)
 count = 0
 joystick_x, joystick_y = 1950, 1950
 button_val = 0
+
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -114,38 +133,29 @@ while run:
                 print(e)
                 pass
 
-    if joystick_x < 1900:
-        for p in points:
-            p[0], p[2] = np.cos(-do) * p[0] - np.sin(-do) * p[2], np.sin(-do) * p[0] + np.cos(-do) * p[2]
-    elif joystick_x > 2000:
-        for p in points:
-            p[0], p[2] = np.cos(do) * p[0] - np.sin(do) * p[2], np.sin(do) * p[0] + np.cos(do) * p[2]
-
     if joystick_y > 2000:
-        for p in points:
-            p[2]-=ds
+        move_forward()
     elif joystick_y < 1900:
-        for p in points:
-            p[2]+=ds
+        move_backward()
 
+    if joystick_x < 1900:
+        move_left()
+    elif joystick_x > 2000:
+        move_right()
 
     ################## keys
     keys=pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
-        for p in points:
-            p[2]-=ds
+        move_forward()
     if keys[pygame.K_s]:
-        for p in points:
-            p[2] += ds
+        move_backward()
 
     if keys[pygame.K_a] or keys[pygame.K_d]:
         if keys[pygame.K_a]:
-            for p in points:
-                p[0], p[2] = np.cos(-do) * p[0] - np.sin(-do) * p[2], np.sin(-do) * p[0] + np.cos(-do) * p[2]
+            move_left()
         else:
-            for p in points:
-                p[0], p[2] = np.cos(do) * p[0] - np.sin(do) * p[2], np.sin(do) * p[0] + np.cos(do) * p[2]
+            move_right()
 
     ############################### Collision detection and projection ###################
 
