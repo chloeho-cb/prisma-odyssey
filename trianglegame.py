@@ -1,5 +1,6 @@
 import pygame
 from pygame import mixer
+from pygame.locals import *
 import random
 import numpy as np
 import math
@@ -8,6 +9,8 @@ import os
 
 pygame.init()
 run=True
+
+random.seed()
 
 s = 'sound'
 mixer.init()
@@ -36,12 +39,12 @@ screen = pygame.display.set_mode(screensize)
 ds=10
 do=0.01
 
-reds = [(255, 0, 0), (200, 0, 0), (150, 0, 0)]
-oranges = [(255, 165, 0), (200, 130, 0), (150, 97, 0), (100, 65, 0), (50, 32, 0)]
+reds = [(255, 0, 0), (200, 0, 0), (150, 0, 0), (100, 0, 0), (50, 0, 0)]
+oranges = [(255, 127, 80),(242, 140, 40),(255, 165, 0),(255, 95, 31),(255, 69, 0)] 
 yellows = [(255, 255, 0), (200, 200, 0), (150, 150, 0), (100, 100, 0), (50, 50, 0)]
 greens = [(0, 255, 0), (0, 200, 0), (0, 150, 0), (0, 100, 0), (0, 50, 0)]
 blues = [(0, 0, 255), (0, 0, 200), (0, 0, 150), (0, 0, 100), (0, 0, 50)]
-purples = [(255, 0, 255), (200, 0, 200), (150, 0, 150), (100, 0, 100), (50, 0, 50)]
+purples = [(207, 159, 255),(195, 177, 225),(128, 0, 128),(127, 0, 255),(93, 63, 211)]
 colors = [reds, oranges, yellows, greens, blues, purples]
 
 maincolor = greens
@@ -52,7 +55,7 @@ def draw_complete(target, colors, n, big=False):
     x0, y0 = 70, 70
     side_length = 200 // 2 - 50
     if big:
-        x0, y0 = width/2, height/2
+        x0, y0 = center
         side_length = 1000 // 2 - 50
     
     for i in range(n):
@@ -84,10 +87,10 @@ def get_initial_points(target, maincolor=greens, secondarycolor=blues):
         points.append([n1, n2, n3, rand, random.choice(maincolor)])
 
     for i in range(target):
-        n1 = random.randrange(0, 2000)  
+        n1 = random.randrange(100, 2000)  
         n2 = 0 
-        n3 = random.randrange(0, 5000)  
-        rand = random.randrange(10, 500)
+        n3 = random.randrange(100, 5000)  
+        rand = random.randrange(30, 500)
         points.append([n1, n2, n3, rand, random.choice(secondarycolor)])
     
     return points
@@ -169,6 +172,9 @@ while run:
                 rotated_vertices = [(int((v[0]-center[0])*np.cos(angle) - (v[1]-center[1])*np.sin(angle) + center[0]),
                                      int((v[0]-center[0])*np.sin(angle) + (v[1]-center[1])*np.cos(angle) + center[1]))
                                     for v in vertices]  # Rotate the vertices
+                # skip if triangle is outside the screen boundaries
+                if all(v[0] < 0 or v[0] > screensize[0] or v[1] < 0 or v[1] > screensize[1] for v in rotated_vertices):
+                    continue  
                 pygame.draw.polygon(screen, p[4], rotated_vertices)  # Use p[4] as the color parameter
                 if p[4] in secondarycolor:
                     triangle_area = abs((rotated_vertices[0][0] * (rotated_vertices[1][1] - rotated_vertices[2][1]) +
@@ -183,13 +189,21 @@ while run:
                         if count == target: # reset the game
                             pygame.mixer.Sound.play(complete)
                             draw_complete(target, secondarycolor, count, big=True)
+                            font = pygame.font.Font(None, 200)
+                            count_text = font.render(f"{count}", True, (255, 255, 255))
+                            screen.blit(count_text, (center[0]-50,center[1]-70))
                             pygame.display.update()
                             pygame.time.delay(1000)
                             target += 1
-                            maincolor = secondarycolor
                             choices = colors.copy()
-                            choices.remove(maincolor)
+                            while len(maincolor) > 5:
+                                maincolor.pop(0)
+                            maincolor += secondarycolor
                             secondarycolor = random.choice(choices)
+                            print(secondarycolor)
+                            print(maincolor)
+                            while any(x in secondarycolor for x in maincolor):
+                                secondarycolor = random.choice(choices)
                             points = get_initial_points(target, maincolor=maincolor, secondarycolor=secondarycolor) 
                             count = 0
 
