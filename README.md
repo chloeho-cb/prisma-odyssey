@@ -1,4 +1,4 @@
-# triangle world game installation creative embedded sys
+# triangle game installation creative embedded sys
  
 projection and movement from [here](https://stackoverflow.com/a/58675007)
 
