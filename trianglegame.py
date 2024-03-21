@@ -193,19 +193,17 @@ while run:
                             count_text = font.render(f"{count}", True, (255, 255, 255))
                             screen.blit(count_text, (center[0]-50,center[1]-70))
                             pygame.display.update()
-                            pygame.time.delay(1000)
+                            count = 0
                             target += 1
                             choices = colors.copy()
-                            while len(maincolor) > 5:
+                            while len(maincolor) > 5: # remove the color that was used
                                 maincolor.pop(0)
-                            maincolor += secondarycolor
-                            secondarycolor = random.choice(choices)
-                            print(secondarycolor)
-                            print(maincolor)
+                            maincolor += secondarycolor # add the color that collected to the main color list
+                            secondarycolor = random.choice(choices) # choose a new secondary color
                             while any(x in secondarycolor for x in maincolor):
                                 secondarycolor = random.choice(choices)
                             points = get_initial_points(target, maincolor=maincolor, secondarycolor=secondarycolor) 
-                            count = 0
+                            pygame.time.delay(1000)
 
     
     # Display text and triangles captured
