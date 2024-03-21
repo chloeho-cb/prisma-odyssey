@@ -10,7 +10,7 @@ SFX:
 - Game FX #1 by danlucaz -- https://freesound.org/s/517755/ -- License: Creative Commons 0
 - Time warp effect by chinomaker -- https://freesound.org/s/324644/ -- License: Creative Commons 0
 
-Designed for joystick also supports WASD+SPACE controls
+Designed for 16-inch Macbook and joystick also supports WASD+SPACE controls
 
 ## Playing the game
 1. Clone this repo and `cd` into the created directory
