@@ -40,8 +40,8 @@ ds=10
 do=0.01
 
 reds = [(255, 0, 0), (200, 0, 0), (150, 0, 0), (100, 0, 0), (50, 0, 0)]
-oranges = [(255, 127, 80),(242, 140, 40),(255, 165, 0),(255, 95, 31),(255, 69, 0)] 
-yellows = [(255, 255, 0), (200, 200, 0), (150, 150, 0), (100, 100, 0), (50, 50, 0)]
+oranges = [(255, 127, 80),(242, 140, 40),(255, 100, 0),(255, 95, 31),(255, 69, 0)] 
+yellows = [(255, 255, 0), (215, 200, 0), (230, 200, 0), (200, 200, 0), (250, 200, 0)]
 greens = [(0, 255, 0), (0, 200, 0), (0, 150, 0), (0, 100, 0), (0, 50, 0)]
 blues = [(0, 0, 255), (0, 0, 200), (0, 0, 150), (0, 0, 100), (0, 0, 50)]
 purples = [(207, 159, 255),(195, 177, 225),(128, 0, 128),(127, 0, 255),(93, 63, 211)]
@@ -75,7 +75,8 @@ def draw_complete(target, colors, n, big=False):
         y1 = y0 + side_length * math.sin(math.radians(i * angle))
         x2 = x0 + side_length * math.cos(math.radians((i + 1) * angle))
         y2 = y0 + side_length * math.sin(math.radians((i + 1) * angle))
-        pygame.draw.lines(screen, (255, 255, 255), True, [(x0, y0), (x1, y1), (x2, y2)], 4)
+        color = colors[i % len(colors)]
+        pygame.draw.lines(screen, color, True, [(x0, y0), (x1, y1), (x2, y2)], 4)
 
 def get_initial_points(target, maincolor=greens, secondarycolor=blues):
     points = []
@@ -87,7 +88,7 @@ def get_initial_points(target, maincolor=greens, secondarycolor=blues):
         points.append([n1, n2, n3, rand, random.choice(maincolor)])
 
     for i in range(target):
-        n1 = random.randrange(100, 2000)  
+        n1 = random.randrange(100, 1000)  
         n2 = 0 
         n3 = random.randrange(100, 5000)  
         rand = random.randrange(30, 500)
@@ -196,8 +197,8 @@ while run:
                             count = 0
                             target += 1
                             choices = colors.copy()
-                            while len(maincolor) > 5: # remove the color that was used
-                                maincolor.pop(0)
+                            if len(maincolor) > 5: # remove the color that was used
+                                maincolor = maincolor[5:]
                             maincolor += secondarycolor # add the color that collected to the main color list
                             secondarycolor = random.choice(choices) # choose a new secondary color
                             while any(x in secondarycolor for x in maincolor):
