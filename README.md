@@ -11,4 +11,4 @@ SFX:
 - Time warp effect by chinomaker -- https://freesound.org/s/324644/ -- License: Creative Commons 0
 
 Designed for joystick also supports WASD+SPACE controls
-Joystick needs to be connected before launching game
+Joystick needs to be connected before launching game and will crash the game if disconnected mid game
