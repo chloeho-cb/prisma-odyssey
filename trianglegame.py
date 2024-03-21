@@ -14,12 +14,12 @@ random.seed()
 
 s = 'sound'
 mixer.init()
-music = pygame.mixer.music.load(os.path.join(s, '522053__nickr2020__heavenly_ambience_nickr2020.wav'))
+music = mixer.music.load(os.path.join(s, '522053__nickr2020__heavenly_ambience_nickr2020.wav'))
 # Heavenly_ambience_NickR2020.wav by NickR2020 -- https://freesound.org/s/522053/ -- License: Attribution 3.0
-pygame.mixer.music.play(-1)
-captured = pygame.mixer.Sound(os.path.join(s, '517755__danlucaz__game-fx-1.wav'))
+mixer.music.play(-1)
+captured = mixer.Sound(os.path.join(s, '517755__danlucaz__game-fx-1.wav'))
 # Game FX #1 by danlucaz -- https://freesound.org/s/517755/ -- License: Creative Commons 0
-complete = pygame.mixer.Sound(os.path.join(s, '324644__chinomaker__time-warp-effect.wav'))
+complete = mixer.Sound(os.path.join(s, '324644__chinomaker__time-warp-effect.wav'))
 # Time warp effect by chinomaker -- https://freesound.org/s/324644/ -- License: Creative Commons 0
 
 # Serial communication setup
@@ -183,11 +183,11 @@ while run:
                     screen_area = screensize[0] * screensize[1]
                     if triangle_area > screen_area * 0.01 and (button_val or keys[pygame.K_SPACE]): # detect collision
                         count += 1 # increment count of found triangles
-                        pygame.mixer.Sound.play(captured)
+                        mixer.Sound.play(captured)
                         if p in points:
                             points.remove(p)
                         if count == target: # reset the game
-                            pygame.mixer.Sound.play(complete)
+                            mixer.Sound.play(complete)
                             draw_complete(target, secondarycolor, count, big=True)
                             font = pygame.font.Font(None, 200)
                             count_text = font.render(f"{count}", True, (255, 255, 255))
