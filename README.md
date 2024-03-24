@@ -58,9 +58,9 @@ You do not need the following to play using the keyboard
 Measure and mark the dimensions for each piece on the balsa wood sheets according to the following specifications:
 - 1 Back Panel: 2 5/8" x 1 5/16"
 - 2 Side Triangles: Cut right triangle piece with a diagonal of 3 1/4" and a height of 1 7/8", and a base side measuring 2 5/8"
-- Door: 2 3/8" x 1 1/8" ( You can also measure this later using the gap between the two triangles peices)
-- Shelf Base: 1 1/4" x 1 1/4" ( Approx. Slightly Wider and Shorter than Base of Joystick )
-- Front Shelf Side: 1/2" x 1 1/4" 
+- 1 Door: 2 3/8" x 1 1/8" ( You can also measure this later using the gap between the two triangles peices)
+- 1 Shelf Base: 1 1/4" x 1 1/4" ( Approx. Slightly Wider and Shorter than Base of Joystick )
+- 1 Front Shelf Side: 1/2" x 1 1/4" 
 - 2 Shelf Sides: 1 3/8" x 1/2"
 - 2 Top Covers: 1/4" x 1 3/8"
 
@@ -77,17 +77,17 @@ Measure and mark the dimensions for each piece on the balsa wood sheets accordin
 <img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/07001859-b795-4fc5-b5f5-c5592ce41dbf" width="500">
 </div>
   
-8. Glue the Back Panel between the Triangle peices by aligning the edges of the same length and gluing the edges.
+6. Glue the Back Panel between the Triangle peices by aligning the edges of the same length and gluing the edges.
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
 <img src= "https://github.com/chloeho7/triangle-world-game/assets/56209417/610ffbf2-d343-45c0-b3f7-e4889097565b" width="500">
 </div>
-9. Glue a top cover on top of the connection between the 3 Shelf Sides.
-10. Glue the other top cover at in parallel with the other top cover at the opposite end of the same side of the triangle.
+7. Glue a top cover on top of the connection between the 3 Shelf Sides.
+8. Glue the other top cover at in parallel with the other top cover at the opposite end of the same side of the triangle.
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
 <img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/9c684103-45e0-46db-9b9c-77d65aa3846a" width="500">
 
-11. If you are okay with taking apart the enclosure to access the ESP32, (after connecting the joystick and ESP32) glue the door in the gap between the two triangles on the 2 5/8" side towards the shelf side such that there is a gap for the USB-C cord opposite of the joystick and shelving.
-12. If you want to be able to access your ESP32 without taking apart the enclosure tape the door, use a hinge or attach leather peices evenly spaced along one of the long sides the door and attach the other end of each of the leather strips to the inside of the enclosure on a triangle. I reccomend attaching the leather / hinge on the opposite side of your dominant hand when looking at the gap, this way when you are holding the enclosure you hold the door closed.
+9. If you are okay with taking apart the enclosure to access the ESP32, (after connecting the joystick and ESP32) glue the door in the gap between the two triangles on the 2 5/8" side towards the shelf side such that there is a gap for the USB-C cord opposite of the joystick and shelving.
+10. If you want to be able to access your ESP32 without taking apart the enclosure tape the door, use a hinge or attach leather peices evenly spaced along one of the long sides the door and attach the other end of each of the leather strips to the inside of the enclosure on a triangle. I reccomend attaching the leather / hinge on the opposite side of your dominant hand when looking at the gap, this way when you are holding the enclosure you hold the door closed.
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
 <img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/d0466168-f65d-465c-ab2d-92c225730b0c" width="500">
 <img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/7889c296-6390-4f54-863a-f93527892e7d" width="500">
