@@ -83,6 +83,7 @@ Measure and mark the dimensions for each piece on the balsa wood sheets accordin
 </div>
 9. Glue a top cover on top of the connection between the 3 Shelf Sides.
 10. Glue the other top cover at in parallel with the other top cover at the opposite end of the same side of the triangle.
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
 <img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/9c684103-45e0-46db-9b9c-77d65aa3846a" width="500">
 
 11. If you are okay with taking apart the enclosure to access the ESP32, (after connecting the joystick and ESP32) glue the door in the gap between the two triangles on the 2 5/8" side towards the shelf side such that there is a gap for the USB-C cord opposite of the joystick and shelving.
@@ -91,6 +92,7 @@ Measure and mark the dimensions for each piece on the balsa wood sheets accordin
 <img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/d0466168-f65d-465c-ab2d-92c225730b0c" width="500">
 <img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/7889c296-6390-4f54-863a-f93527892e7d" width="500">
 </div>
+
 ### Connecting
 
 - Joystick GND -> bottom right Ground on the TTGO
