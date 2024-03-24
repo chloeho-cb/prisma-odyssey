@@ -50,9 +50,9 @@ You do not need the following to play using the keyboard
 4. Select Upload
 
 ### Enclosure 
-![IMG_6464](https://github.com/chloeho7/triangle-world-game/assets/56209417/12a3f3ff-0b4f-4a62-a33b-9cbeacb11e55)
-![IMG_6349](https://github.com/chloeho7/triangle-world-game/assets/56209417/276436e0-cbf1-4424-97d8-c4c4968b6efd)
-![IMG_6466](https://github.com/chloeho7/triangle-world-game/assets/56209417/9afbe4b5-1d09-46fd-a245-7092c0d92eec)
+<img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/12a3f3ff-0b4f-4a62-a33b-9cbeacb11e55" width="500">
+<img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/276436e0-cbf1-4424-97d8-c4c4968b6efd" width="500">
+<img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/9afbe4b5-1d09-46fd-a245-7092c0d92eec" width="500">
 
 Measure and mark the dimensions for each piece on the balsa wood sheets according to the following specifications:
 - 1 Back Panel: 2 5/8" x 1 5/16"
