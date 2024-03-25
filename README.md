@@ -6,7 +6,7 @@ Experimental Explorating Game Designed for 16-inch Macbook and Joystick (also su
 
 ## Playing the game
 1. Clone this repo and `cd` into the created directory
-2. `python3 trianglegame.py`
+2. `python3 prisma_odyssey.py`
 
 To play with the Joystick, it needs to be connected before launching game and will crash the game if disconnected mid game
 
