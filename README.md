@@ -4,16 +4,6 @@
 
 Experimental Explorating Game Designed for 16-inch Macbook and Joystick (also supports WASD+SPACE controls and other sized screens) using [Pygame](https://www.pygame.org/)
 
-projection and movement from [here](https://stackoverflow.com/a/58675007)
-
-Music: 
-- Heavenly_ambience_NickR2020.wav by NickR2020 -- https://freesound.org/s/522053/ -- License: Attribution 3.0
-
-SFX:
-- Game FX #1 by danlucaz -- https://freesound.org/s/517755/ -- License: Creative Commons 0
-- Time warp effect by chinomaker -- https://freesound.org/s/324644/ -- License: Creative Commons 0
-
-
 ## Playing the game
 1. Clone this repo and `cd` into the created directory
 2. `python3 trianglegame.py`
@@ -103,3 +93,14 @@ Measure and mark the dimensions for each piece on the balsa wood sheets accordin
 - Joystick SW -> TTGO 25
 - Plug USB-C into computer and the ESP32
 <img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/a3e06335-a310-4a0a-958e-f93c3a05ea82" width="500">
+
+### Credits
+
+projection and movement from [here](https://stackoverflow.com/a/58675007)
+
+Music: 
+- Heavenly_ambience_NickR2020.wav by NickR2020 -- https://freesound.org/s/522053/ -- License: Attribution 3.0
+
+SFX:
+- Game FX #1 by danlucaz -- https://freesound.org/s/517755/ -- License: Creative Commons 0
+- Time warp effect by chinomaker -- https://freesound.org/s/324644/ -- License: Creative Commons 0
