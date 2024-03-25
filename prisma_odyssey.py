@@ -34,6 +34,7 @@ except Exception:
 screensize = (width,height)=(pygame.display.Info().current_w,pygame.display.Info().current_h-120)#(1000,1000)
 center=(int(width/2),int(height/2))
 screen = pygame.display.set_mode(screensize)
+pygame.display.set_caption('Prisma Odyssey')
 
 #delta mov
 ds=10
