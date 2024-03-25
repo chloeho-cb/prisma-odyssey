@@ -4,6 +4,8 @@
 
 Experimental Art Exploration Game Designed for 16-inch Macbook and Joystick (also supports WASD+SPACE controls and other sized screens) using [Pygame](https://www.pygame.org/)
 
+[Watch Gameplay](https://youtu.be/c69II9nHpro?si=-7jtYVaN3d2iwHK4)
+
 ## Playing the game
 1. Clone this repo and `cd` into the created directory
 2. `python3 prisma_odyssey.py`
