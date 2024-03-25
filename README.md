@@ -2,18 +2,17 @@
 
 ![Screen Recording 2024-03-21 at 11 29 59 AM (1)](https://github.com/chloeho7/triangle-world-game/assets/56209417/f77cb067-b08b-4130-b4b9-48913ebb355a)
 
+Experimental Explorating Game Designed for 16-inch Macbook and Joystick (also supports WASD+SPACE controls and other sized screens) using [Pygame](https://www.pygame.org/)
 
 projection and movement from [here](https://stackoverflow.com/a/58675007)
 
 Music: 
 - Heavenly_ambience_NickR2020.wav by NickR2020 -- https://freesound.org/s/522053/ -- License: Attribution 3.0
 
-
 SFX:
 - Game FX #1 by danlucaz -- https://freesound.org/s/517755/ -- License: Creative Commons 0
 - Time warp effect by chinomaker -- https://freesound.org/s/324644/ -- License: Creative Commons 0
 
-Designed for 16-inch Macbook and joystick also supports WASD+SPACE controls and other sized screens
 
 ## Playing the game
 1. Clone this repo and `cd` into the created directory
@@ -48,6 +47,8 @@ You do not need the following to play using the keyboard
 2. Connect the TTGO T-display ESP32 and your computer using the USB-C
 3. In the [Arduino IDE](https://www.arduino.cc/en/software) select Tools and the corresponding Port
 4. Select Upload
+
+### Enclosure 
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
 <img src="https://github.com/chloeho7/triangle-world-game/assets/56209417/12a3f3ff-0b4f-4a62-a33b-9cbeacb11e55" width="500">
