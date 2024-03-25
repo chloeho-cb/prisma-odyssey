@@ -1,8 +1,8 @@
-# Triangle Game Installation Creative Embedded Sys
+# Prisma Odyssey Installation Creative Embedded Sys
 
 ![Screen Recording 2024-03-21 at 11 29 59 AM (1)](https://github.com/chloeho7/triangle-world-game/assets/56209417/f77cb067-b08b-4130-b4b9-48913ebb355a)
 
-Experimental Explorating Game Designed for 16-inch Macbook and Joystick (also supports WASD+SPACE controls and other sized screens) using [Pygame](https://www.pygame.org/)
+Experimental Art Exploration Game Designed for 16-inch Macbook and Joystick (also supports WASD+SPACE controls and other sized screens) using [Pygame](https://www.pygame.org/)
 
 ## Playing the game
 1. Clone this repo and `cd` into the created directory
