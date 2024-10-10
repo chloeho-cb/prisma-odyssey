@@ -6,6 +6,7 @@ import numpy as np
 import math
 import serial
 import os
+import webbrowser
 
 pygame.init()
 run=True
@@ -113,7 +114,6 @@ def move_right():
      for p in points:
         p[0], p[2] = np.cos(do) * p[0] - np.sin(do) * p[2], np.sin(do) * p[0] + np.cos(do) * p[2]
 
-
 FPS = 30
 clock = pygame.time.Clock()
 
@@ -195,6 +195,8 @@ while run:
                             count_text = font.render(f"{count}", True, (255, 255, 255))
                             screen.blit(count_text, (center[0]-50,center[1]-70))
                             pygame.display.update()
+                            if target == 3:
+                                webbrowser.open("https://dynamic-qr.linkdrop.io/#/mqr/6Fs6FuUzqS1q/J6SJ6s5zxRAf",new=0, autoraise=True)
                             count = 0
                             target += 1
                             choices = colors.copy()
