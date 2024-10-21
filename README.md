@@ -1,4 +1,4 @@
-# Prisma Odyssey Installation Creative Embedded Sys
+# Prisma Odyssey with NFT Rewards
 
 ![Screen Recording 2024-03-21 at 11 29 59 AM (1)](https://github.com/chloeho7/triangle-world-game/assets/56209417/f77cb067-b08b-4130-b4b9-48913ebb355a)
 
